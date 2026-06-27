@@ -109,3 +109,20 @@ res.status(200).json({
 
 }}
 module.exports = {register,login  }
+
+
+const logout = async(req,res)=>{
+ 
+    const token = req.cookies.token
+
+    if(!token){
+        return    res.status(500).json({
+    message : 'Already Logout',
+   
+    })
+    }
+
+    const addToken =  
+
+
+ }
