@@ -1,7 +1,13 @@
 const  jwt  = require('jsonwebtoken');
 const userModel = require('../Models/user.model')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const BlacklistToken = require('../Models/tokenBlacklist');
 
+
+/**
+ * Register a new user
+ * @route POST /api/auth/register
+ */
 
 const register = async(req,res)=>{
     try {
@@ -56,6 +62,11 @@ return    res.status(500).json({
 
 }
 
+/**
+ * Login existing user
+ * @route POST /api/auth/login
+ */
+    
 const login = async(req,res)=>{
     try {
         
@@ -108,21 +119,33 @@ res.status(200).json({
     
 
 }}
-module.exports = {register,login  }
 
+
+
+/**
+ * Logout user and blacklist JWT
+ * @route POST /api/auth/logout
+ */
 
 const logout = async(req,res)=>{
  
+    
     const token = req.cookies.token
-
-    if(!token){
-        return    res.status(500).json({
-    message : 'Already Logout',
-   
-    })
+    
+    if(token){ 
+        
+        await BlacklistToken.create({token})
+        
     }
+    res.clearCookie("token");
 
-    const addToken =  
+
+    res.status(200).json({
+    message : 'User Logout Successfully',
+        
+})
 
 
- }
+}
+
+module.exports = {register,login , logout }
