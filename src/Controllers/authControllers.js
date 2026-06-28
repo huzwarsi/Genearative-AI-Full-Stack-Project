@@ -148,4 +148,23 @@ const logout = async(req,res)=>{
 
 }
 
-module.exports = {register,login , logout }
+
+
+
+const getMe = async(req,res)=>{
+
+    const user = await userModel.findById(req.user.id)
+
+    return   res.status(200).json({
+    message : 'User detailed fetched Successfully',
+    user : {
+        id : user._id,
+        username : user.username,
+        email : user.email
+    }
+        
+})
+   
+}
+
+module.exports = {register,login , logout , getMe}
