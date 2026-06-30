@@ -22,7 +22,7 @@ export const register = async({username, email,password})=>{
 
 
 
-export const Login = async({email,password})=>{
+export const login = async({email,password})=>{
     try {
         
     
@@ -40,7 +40,7 @@ export const Login = async({email,password})=>{
 
 
 
-export const Logout = async()=>{
+export const logout = async()=>{
     try {
         
  
@@ -70,6 +70,7 @@ export const getMe = async()=>{
     }
 
 }
+
 
 
 
