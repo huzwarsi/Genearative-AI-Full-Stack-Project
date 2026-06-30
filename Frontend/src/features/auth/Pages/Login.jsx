@@ -18,14 +18,15 @@ const Login = () => {
   const submitHandler = async(e)=>{ 
     
     e.preventDefault()
-    console.log('Form submitted')
    await handleLogin({email,password})
+   navigate('/')
   }
   if(loading){
     return (
       <main><h1>Loading.....</h1></main>
     )
   }
+
 
   return (
     <main>
