@@ -1,8 +1,10 @@
 
-const interviewController = ()=>{
+const GenerateInterviewController = async(req,res)=> {
+console.log('8888');
+
 
 
 
 }
 
-module.exports = interviewController
+module.exports = GenerateInterviewController
