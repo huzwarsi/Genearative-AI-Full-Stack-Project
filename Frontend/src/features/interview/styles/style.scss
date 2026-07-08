@@ -1,0 +1,289 @@
+// 1. Exact UI Colors & Settings
+$bg-dark-page: #0d0e12;       
+$bg-card: #15161c;            
+$bg-input: #1b1c24;           
+$primary-pink: #e61b53;       
+$text-light: #f1f5f9;         
+$text-muted: #94a3b8;         
+$border-color: #262936;       
+$radius-lg: 16px;
+$radius-md: 10px;
+$transition-smooth: all 0.25s ease;
+
+// 2. Mixins
+@mixin input-focus {
+  outline: none;
+  border-color: rgba($primary-pink, 0.5);
+  box-shadow: 0 0 0 3px rgba($primary-pink, 0.15);
+}
+
+// 3. Main Styling
+body {
+  background-color: $bg-dark-page;
+  margin: 0;
+  color: $text-light;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.page-wrapper {
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+// Hero Header
+.hero-header {
+  text-align: center;
+  margin-bottom: 40px;
+
+  h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: $text-light;
+    margin-bottom: 12px;
+
+    span {
+      color: $primary-pink;
+    }
+  }
+
+  p {
+    font-size: 15px;
+    color: $text-muted;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+}
+
+// Layout Container
+.home {
+  display: flex;
+  gap: 40px;
+  background-color: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  padding: 35px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+
+  .left, .right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  // Column Section Titles with SVGs
+  .section-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: $text-light;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+    
+    svg {
+      color: $primary-pink;
+    }
+  }
+
+  // Inputs and Textareas Style
+  textarea {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid $border-color;
+    border-radius: $radius-md;
+    background-color: $bg-input;
+    font-size: 14px;
+    color: $text-light;
+    transition: $transition-smooth;
+    box-sizing: border-box;
+    line-height: 1.6;
+
+    &::placeholder {
+      color: #4e5366;
+    }
+
+    &:focus {
+      @include input-focus;
+    }
+  }
+
+  // Left Side Height Match
+  .left textarea {
+    height: 100%;
+    min-height: 400px;
+    resize: none;
+  }
+
+  // Form Label Styling
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    label {
+      font-size: 13px;
+      font-weight: 500;
+      color: $text-muted;
+    }
+  }
+
+  // Custom File Upload Component
+  .file-drop-zone {
+    position: relative;
+    border: 1px dashed $border-color;
+    border-radius: $radius-md;
+    background-color: $bg-input;
+    padding: 24px;
+    text-align: center;
+    transition: $transition-smooth;
+
+    input[type="file"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .drop-zone-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+
+      .upload-icon-wrapper {
+        color: $primary-pink;
+        background: rgba($primary-pink, 0.1);
+        padding: 8px;
+        border-radius: 50%;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .main-text {
+        font-size: 14px;
+        font-weight: 500;
+        color: $text-light;
+        margin: 0;
+      }
+
+      .sub-text {
+        font-size: 12px;
+        color: $text-muted;
+        margin: 0;
+      }
+    }
+
+    &:hover {
+      border-color: rgba($primary-pink, 0.6);
+      background-color: rgba($bg-input, 0.5);
+    }
+  }
+
+  // Divider Text
+  .or-divider {
+    text-align: center;
+    color: #4e5366;
+    font-size: 12px;
+    font-weight: 600;
+    position: relative;
+    margin: 5px 0;
+
+    &::before, &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 42%;
+      height: 1px;
+      background-color: $border-color;
+    }
+    &::before { left: 0; }
+    &::after { right: 0; }
+  }
+
+  .right textarea {
+    height: 110px;
+    resize: none;
+  }
+
+  // Bottom Notice Banner (Layout Breaking Fixed)
+  .info-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background-color: #111a2e;
+    border: 1px solid #1e293b;
+    border-radius: $radius-md;
+    padding: 12px 16px;
+    box-sizing: border-box;
+
+    .info-icon {
+      color: #38bdf8;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    
+    .info-text {
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.5;
+      margin: 0;
+      text-align: left;
+    }
+    
+    strong {
+      color: $text-light;
+    }
+  }
+
+  // Primary Action Button with SVG
+  .generate-btn {
+    background-color: $primary-pink;
+    color: white;
+    padding: 15px 24px;
+    border: none;
+    border-radius: $radius-md;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 14px rgba($primary-pink, 0.4);
+    transition: $transition-smooth;
+    margin-top: 10px;
+
+    svg {
+      flex-shrink: 0;
+    }
+
+    &:hover {
+      background-color: #d01448;
+      box-shadow: 0 6px 20px rgba($primary-pink, 0.6);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  // Responsive UI (Mobile Breakpoint)
+  @media (max-width: 850px) {
+    flex-direction: column;
+    padding: 20px;
+    gap: 30px;
+
+    .left textarea {
+      min-height: 250px;
+    }
+  }
+}
