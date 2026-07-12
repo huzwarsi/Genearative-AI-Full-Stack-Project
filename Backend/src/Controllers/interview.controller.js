@@ -35,4 +35,34 @@ const GenerateInterviewController = async (req, res) => {
     }
 };
 
-module.exports = GenerateInterviewController;
+
+const InterviewReportById = async(req,res)=>{
+
+    const {interviewID} = req.params
+
+    const interviewReportById = await InterviewReportModel.findOne(({
+        _id : interviewID,
+        user : req.user.id
+    }))
+
+    return res.status(200).json({
+        message : "Interview Report fetched successfully",
+        interviewReportById
+    })  
+
+
+}
+
+const AllInterviewReports = async(req,res)=>{
+
+   
+
+    const Report = await InterviewReportModel.find({
+        user : req.user.id
+    }).sort({ createdAt: -1 });
+    return res.status(200).json({
+        message : "All Interview Reports fetched successfully",
+        Report
+    })  
+}
+module.exports = {GenerateInterviewController,InterviewReportById, AllInterviewReports};
