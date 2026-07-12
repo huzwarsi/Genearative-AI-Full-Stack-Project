@@ -6,8 +6,10 @@ const App = () => {
   return (
     <>
     <AuthProvider>
+      <interviewProvider>
 
     <RouterProvider router={router} />
+      </interviewProvider>
     </AuthProvider>
     </>
   )
