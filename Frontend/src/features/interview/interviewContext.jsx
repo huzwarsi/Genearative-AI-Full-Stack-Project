@@ -4,7 +4,7 @@ const { createContext } = require("react");
 
 export const interviewContext = createContext()
 
-export const interviewProvider = ({children})=>{
+export const InterviewProvider = ({children})=>{
 
     const [loading, setLoading] = useState(false)
     const [report , setReport] = useState(null)
@@ -12,7 +12,7 @@ export const interviewProvider = ({children})=>{
 
 
     return (
-        <interviewContext.Provider value={loading,setLoading,report,setReport}>
+        <interviewContext.Provider value={loading,setLoading,report,setReport ,reports,setReports}>
             {children}
         </interviewContext.Provider>
     )
