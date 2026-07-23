@@ -1,7 +1,31 @@
 import React from 'react'
 import '../styles/style.scss'
+import { useInterview } from '../hooks/useInterview'
+import { useState } from 'react'
+import { useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
+    const { loading, generateReport } = useInterview()
+    const [jobDescription, setJobDescription] = useState('')
+    const [selfDescription, setSelfDescription] = useState('')
+    const resumeRef = useRef()
+    const Navigate = useNavigate('')
+
+    const handleGenerateReport = async () => {
+        const resumeFile = resumeRef.current.files[0] || null;
+        const data = await generateReport({ jobDescription, selfDescription, resumeFile });
+        Navigate(`/interview/${data._id}`)
+    };
+
+    if (loading) {
+        return (
+            <div className="loading-screen">
+                <div className="spinner"></div>
+                <p>Generating your personalized interview Plan...</p>
+            </div>
+        )
+    }
     return (
         <div className="page-wrapper">
             {/* Main Header Section */}
@@ -14,12 +38,13 @@ const Home = () => {
                 {/* Left Section: Target Job Description */}
                 <div className="left">
                     <div className="section-title">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>
                         Target Job Description
                     </div>
-                    <textarea 
-                        name="jobDescription" 
-                        id="jobDescription" 
+                    <textarea
+                        onChange={(e) => setJobDescription(e.target.value)}
+                        name="jobDescription"
+                        id="jobDescription"
                         placeholder="Paste the full job description here...&#10;e.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScript, and large scale system design.'"
                     ></textarea>
                 </div>
@@ -27,20 +52,21 @@ const Home = () => {
                 {/* Right Section: Profile & Uploads */}
                 <div className="right">
                     <div className="section-title">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
                         Your Profile
                     </div>
 
                     <div className="input-group">
                         <label htmlFor="resume">Upload Resume</label>
                         <div className="file-drop-zone">
-                            <input type="file" name="resume" id="resume" accept=".pdf" />
+                            <input type="file" name="resume" id="resume" accept=".pdf" ref={resumeRef} />
                             <div className="drop-zone-content">
                                 <div className="upload-icon-wrapper">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
                                 </div>
-                                <p className="main-text">Click to upload or drag & drop</p>
+                                <p className="main-text" >Click to upload or drag & drop</p>
                                 <p className="sub-text">PDF or DOCX (Max 10MB)</p>
+
                             </div>
                         </div>
                     </div>
@@ -49,23 +75,25 @@ const Home = () => {
 
                     <div className="input-group">
                         <label htmlFor="selfDescription">Quick Self-Description</label>
-                        <textarea 
-                            name="selfDescription" 
-                            id="selfDescription" 
+                        <textarea
+                            onChange={(e) => setSelfDescription(e.target.value)}
+
+                            name="selfDescription"
+                            id="selfDescription"
                             placeholder="Briefly describe your experience, key skills, and years of experience if you don't have a resume handy..."
                         ></textarea>
                     </div>
 
                     {/* Bottom Info Banner - Layout Fixed */}
                     <div className="info-banner">
-                        <svg className="info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        <svg className="info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></svg>
                         <p className="info-text">
                             Either a <strong>Resume</strong> or a <strong>Self-Description</strong> is required to generate a personalized plan.
                         </p>
                     </div>
 
-                    <button className='generate-btn'>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 2 22 12 17 22 22 12 2"/></svg>
+                    <button className='generate-btn' onClick={handleGenerateReport}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 2 22 12 17 22 22 12 2" /></svg>
                         Generate My Interview Strategy
                     </button>
                 </div>

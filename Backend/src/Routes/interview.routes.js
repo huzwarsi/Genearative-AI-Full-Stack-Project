@@ -7,7 +7,7 @@ const interviewRouter = express.Router();
 
 
 
-interviewRouter.post('/', authUser, upload.single('file'),GenerateInterviewController)
+interviewRouter.post('/', authUser, upload.fields([{ name: 'resume', maxCount: 1 }]), GenerateInterviewController)
 interviewRouter.get('/report/:interviewID', authUser,InterviewReportById)
 interviewRouter.get('/report', authUser,AllInterviewReports)
 

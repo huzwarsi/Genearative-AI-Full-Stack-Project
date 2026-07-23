@@ -2,14 +2,19 @@ const { PDFParse } = require("pdf-parse");
 const generateInterviewReport = require("../Services/Ai.Service");
 const InterviewReportModel = require("../Models/interview.Model");
 
-console.log("KEY:", process.env.GEMINI_API_KEY);
+// console.log("KEY:", process.env.GEMINI_API_KEY);
 const GenerateInterviewController = async (req, res) => {
     try {
-        const parser = new PDFParse({ data: req.file.buffer });
-        const result = await parser.getText();
-        const resumeContent = result.text;
+        const uploadedFile = req.files?.resume?.[0] || req.file;
+        let resumeContent = '';
 
-        const { selfDescription, jobDescription } = req.body;
+        if (uploadedFile?.buffer) {
+            const parser = new PDFParse({ data: uploadedFile.buffer });
+            const result = await parser.getText();
+            resumeContent = result.text || '';
+        }
+
+        const { selfDescription = '', jobDescription = '' } = req.body;
 
         const interViewReportByAi = await generateInterviewReport({
             resume: resumeContent,

@@ -1,5 +1,5 @@
-const { useState } = require("react");
-const { createContext } = require("react");
+import { createContext } from "react"
+import { useState } from "react"
 
 
 export const interviewContext = createContext()
@@ -12,7 +12,7 @@ export const InterviewProvider = ({children})=>{
 
 
     return (
-        <interviewContext.Provider value={loading,setLoading,report,setReport ,reports,setReports}>
+        <interviewContext.Provider value={{loading,setLoading,report,setReport ,reports,setReports}}>
             {children}
         </interviewContext.Provider>
     )
